@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Cell as CellType } from '../types'
+import type { Cell as CellType } from '../types/game'
 import { getItemDef, generatorMap } from '../data/items'
 import './Cell.css'
 

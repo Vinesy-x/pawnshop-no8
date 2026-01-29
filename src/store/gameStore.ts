@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { GameState, Cell, BoardItem, Order } from '../types'
+import type { GameState, Cell } from '../types/game'
 import { getItemDef, generatorMap } from '../data/items'
 
 // 生成唯一ID

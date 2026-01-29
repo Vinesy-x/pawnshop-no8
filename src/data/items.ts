@@ -1,4 +1,4 @@
-import { ItemDef, GeneratorDef } from '../types'
+import type { ItemDef, GeneratorDef } from '../types/game'
 
 // ========== 供奉链 ==========
 // 蜡烛 → 油灯 → 长明灯 → 神灯 → 天灯
