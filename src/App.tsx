@@ -13,7 +13,8 @@ type GamePhase = 'title' | 'story-select' | 'dialog' | 'playing' | 'complete'
 function App() {
   const [phase, setPhase] = useState<GamePhase>('title')
   const [currentDialogId, setCurrentDialogId] = useState<string | null>(null)
-  const { orders, setOrders, initBoard, placeItem } = useGameStore()
+  const [levelReady, setLevelReady] = useState(false)
+  const { orders, setOrders, initBoard, placeItem, coins, stars } = useGameStore()
   
   // 获取当前对话
   const currentDialog: StoryDialog | null = currentDialogId 
@@ -24,6 +25,21 @@ function App() {
   const startGame = () => {
     setPhase('dialog')
     setCurrentDialogId(story1.startDialog)
+    setLevelReady(false)
+  }
+  
+  // 初始化关卡
+  const initLevel = () => {
+    const level = story1.levels[0]
+    initBoard(level.boardWidth, level.boardHeight)
+    
+    // 延迟放置生成器
+    setTimeout(() => {
+      level.generators.forEach((gen: { x: number; y: number; defId: string }) => {
+        placeItem(gen.x, gen.y, gen.defId, true)
+      })
+      setLevelReady(true)
+    }, 100)
   }
   
   // 处理对话下一步
@@ -32,22 +48,13 @@ function App() {
     
     // 检查触发器
     if (currentDialog.trigger === 'start_level') {
-      // 初始化关卡
-      const level = story1.levels[0]
-      initBoard(level.boardWidth, level.boardHeight)
-      
-      // 延迟放置生成器
-      setTimeout(() => {
-        level.generators.forEach((gen: { x: number; y: number; defId: string }) => {
-          placeItem(gen.x, gen.y, gen.defId, true)
-        })
-      }, 100)
+      initLevel()
     }
     
     if (currentDialog.trigger === 'show_order') {
       // 设置订单并进入游戏
       const level = story1.levels[0]
-      setOrders(level.orders)
+      setOrders(level.orders.map(o => ({ ...o, completed: 0 })))
       setPhase('playing')
       return
     }
@@ -77,7 +84,7 @@ function App() {
       setTimeout(() => {
         setPhase('dialog')
         setCurrentDialogId('complete-1')
-      }, 1000)
+      }, 1500)
     }
   }, [allOrdersComplete, phase])
   
@@ -88,6 +95,14 @@ function App() {
     text: currentDialog.text,
     choices: currentDialog.choices
   } : null
+  
+  // 重新开始游戏
+  const restartGame = () => {
+    setPhase('title')
+    setCurrentDialogId(null)
+    setLevelReady(false)
+    setOrders([])
+  }
 
   return (
     <div className="app">
@@ -106,7 +121,7 @@ function App() {
       )}
       
       {/* 游戏主界面 */}
-      {(phase === 'playing' || phase === 'dialog') && (
+      {(phase === 'playing' || (phase === 'dialog' && levelReady)) && (
         <>
           <header className="app-header">
             <h1>无名当铺</h1>
@@ -119,6 +134,13 @@ function App() {
               {orders.length > 0 && <OrderPanel />}
             </div>
           </main>
+          
+          {/* 订单全部完成提示 */}
+          {allOrdersComplete && phase === 'playing' && (
+            <div className="complete-overlay">
+              <div className="complete-message">✨ 法器已备齐 ✨</div>
+            </div>
+          )}
         </>
       )}
       
@@ -135,13 +157,23 @@ function App() {
       {phase === 'complete' && (
         <div className="complete-screen">
           <div className="complete-content">
-            <h2>故事完成</h2>
-            <p className="story-title">{story1.title}</p>
-            <div className="rewards">
-              <p>🌟 获得修缮点 x3</p>
-              <p>📖 解锁收藏：红嫁衣</p>
+            <h2>🌙 故事完成</h2>
+            <p className="story-title">「{story1.title}」</p>
+            
+            <div className="story-epilogue">
+              <p>王家大院的那场大火，至今仍是未解之谜。</p>
+              <p>但每逢清明，总有人看见一个穿红嫁衣的女子，</p>
+              <p>站在那口枯井边，对着月亮微笑……</p>
             </div>
-            <button className="back-button" onClick={() => setPhase('title')}>
+            
+            <div className="rewards">
+              <h3>📦 获得奖励</h3>
+              <p>🪙 金币 x{coins}</p>
+              <p>⭐ 星星 x{stars}</p>
+              <p>🎭 收藏品：红嫁衣</p>
+            </div>
+            
+            <button className="back-button" onClick={restartGame}>
               返回主菜单
             </button>
           </div>

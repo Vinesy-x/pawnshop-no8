@@ -3,12 +3,7 @@ import { useGameStore } from '../store/gameStore'
 import { Cell } from './Cell'
 import './Board.css'
 
-interface BoardProps {
-  width?: number
-  height?: number
-}
-
-export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
+export const Board: React.FC = () => {
   const { 
     board,
     boardWidth,
@@ -18,8 +13,6 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
     coins,
     stars,
     draggingItem,
-    initBoard,
-    placeItem,
     clickGenerator,
     startDrag,
     endDrag,
@@ -29,22 +22,6 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
   
   const [dragOverCell, setDragOverCell] = useState<{x: number, y: number} | null>(null)
   const [message, setMessage] = useState<string | null>(null)
-
-  // 初始化棋盘和放置初始生成器
-  useEffect(() => {
-    initBoard(width, height)
-    
-    // 延迟放置初始生成器（等棋盘初始化完成）
-    setTimeout(() => {
-      // 放置几个生成器
-      placeItem(0, 0, 'gen-candle', true)
-      placeItem(1, 0, 'gen-paper', true)
-      placeItem(2, 0, 'gen-herb', true)
-      placeItem(3, 0, 'gen-wood', true)
-      placeItem(4, 0, 'gen-cloth', true)
-      placeItem(5, 0, 'gen-bone', true)
-    }, 100)
-  }, [width, height])
 
   // ESC 取消拖拽
   useEffect(() => {
@@ -74,6 +51,11 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
     } else {
       setMessage('❌ 没有匹配的订单')
     }
+  }
+  
+  // 如果棋盘未初始化，显示空
+  if (board.length === 0) {
+    return <div className="board-container">加载中...</div>
   }
 
   return (

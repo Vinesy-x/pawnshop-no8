@@ -106,26 +106,46 @@ body {
 /* 完成画面 */
 .complete-screen {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at center, #1a2a1a 0%, #0a150a 70%);
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 70%);
 }
 
 .complete-content {
   text-align: center;
+  max-width: 500px;
+  padding: 40px;
 }
 
 .complete-content h2 {
   font-size: 36px;
-  color: #4CAF50;
-  margin-bottom: 10px;
+  color: #FFD700;
+  margin-bottom: 15px;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
 .complete-content .story-title {
-  font-size: 20px;
-  color: #888;
+  font-size: 24px;
+  color: #e0e0e0;
   margin-bottom: 30px;
+}
+
+.story-epilogue {
+  background: rgba(0,0,0,0.3);
+  padding: 20px 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border-left: 3px solid #8B0000;
+}
+
+.story-epilogue p {
+  font-size: 14px;
+  color: #aaa;
+  line-height: 1.8;
+  margin: 8px 0;
+  font-style: italic;
 }
 
 .rewards {
@@ -135,10 +155,48 @@ body {
   margin-bottom: 30px;
 }
 
+.rewards h3 {
+  color: #FFD700;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
 .rewards p {
   font-size: 16px;
-  color: #FFD700;
+  color: #e0e0e0;
   margin: 10px 0;
+}
+
+/* 完成过渡动画 */
+.complete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease;
+}
+
+.complete-message {
+  font-size: 32px;
+  color: #FFD700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .back-button {
