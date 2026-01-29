@@ -47,10 +47,16 @@
 
 .cell-content.item {
   cursor: grab;
+  transition: transform 0.2s ease;
+}
+
+.cell-content.item:hover {
+  transform: scale(1.1);
 }
 
 .cell-content.item:active {
   cursor: grabbing;
+  transform: scale(0.95);
 }
 
 .cell-content.dragging {
@@ -97,4 +103,26 @@
 .cell-blocked {
   font-size: 28px;
   opacity: 0.6;
+}
+
+/* 合成成功动画 */
+.cell-content.merged {
+  animation: mergeEffect 0.4s ease;
+}
+
+@keyframes mergeEffect {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 产出物品动画 */
+.cell-content.spawned {
+  animation: spawnEffect 0.3s ease;
+}
+
+@keyframes spawnEffect {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
 }
