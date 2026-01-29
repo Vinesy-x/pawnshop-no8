@@ -48,6 +48,7 @@ interface GameStore extends GameState {
   
   // 提交订单
   submitOrder: (orderId: string, itemId: string) => void
+  submitItemToOrder: (x: number, y: number) => boolean  // 从棋盘提交物品
   setOrders: (orders: any[]) => void
   
   // 资源
@@ -288,6 +289,51 @@ export const useGameStore = create<GameStore>((set, get) => ({
     }
     
     set({ orders: newOrders })
+  },
+
+  // 从棋盘提交物品到订单
+  submitItemToOrder: (x: number, y: number) => {
+    const { board, orders } = get()
+    const cell = board[y]?.[x]
+    if (!cell?.item || cell.item.isGenerator) return false
+    
+    const itemId = cell.item.defId
+    
+    // 查找匹配的未完成订单
+    const orderIndex = orders.findIndex(o => 
+      o.targetItemId === itemId && o.completed < o.count
+    )
+    
+    if (orderIndex === -1) {
+      console.log('没有匹配的订单')
+      return false
+    }
+    
+    const order = orders[orderIndex]
+    
+    // 移除棋盘上的物品
+    const newBoard = board.map(row => row.map(c => ({ ...c })))
+    newBoard[y][x].item = null
+    
+    // 更新订单
+    const newOrders = [...orders]
+    newOrders[orderIndex] = {
+      ...order,
+      completed: order.completed + 1
+    }
+    
+    // 检查是否完成
+    if (newOrders[orderIndex].completed >= order.count) {
+      console.log(`订单完成! 奖励:`, order.reward)
+      // 发放奖励
+      if (order.reward.coins) get().addCoins(order.reward.coins)
+      if (order.reward.energy) get().addEnergy(order.reward.energy)
+      if (order.reward.stars) get().addStars(order.reward.stars)
+    }
+    
+    set({ board: newBoard, orders: newOrders })
+    console.log(`提交物品 ${itemId} 到订单`)
+    return true
   },
 
   // 设置订单

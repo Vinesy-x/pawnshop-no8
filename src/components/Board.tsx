@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { Cell } from './Cell'
 import './Board.css'
@@ -23,10 +23,12 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
     clickGenerator,
     startDrag,
     endDrag,
-    cancelDrag
+    cancelDrag,
+    submitItemToOrder
   } = useGameStore()
   
   const [dragOverCell, setDragOverCell] = useState<{x: number, y: number} | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
 
   // 初始化棋盘和放置初始生成器
   useEffect(() => {
@@ -55,6 +57,24 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [cancelDrag])
+  
+  // 消息自动消失
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(null), 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [message])
+  
+  // 双击提交物品
+  const handleDoubleClick = (x: number, y: number) => {
+    const success = submitItemToOrder(x, y)
+    if (success) {
+      setMessage('✅ 物品已提交!')
+    } else {
+      setMessage('❌ 没有匹配的订单')
+    }
+  }
 
   return (
     <div className="board-container">
@@ -73,6 +93,11 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
           <span className="resource-value">{stars}</span>
         </div>
       </div>
+      
+      {/* 消息提示 */}
+      {message && (
+        <div className="board-message">{message}</div>
+      )}
       
       {/* 棋盘 */}
       <div 
@@ -105,6 +130,7 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
                   setDragOverCell(null)
                 }
               }}
+              onDoubleClick={() => handleDoubleClick(x, y)}
             />
           ))
         )}
@@ -112,7 +138,7 @@ export const Board: React.FC<BoardProps> = ({ width = 6, height = 8 }) => {
       
       {/* 提示 */}
       <div className="board-tips">
-        <p>💡 点击生成器产出物品，拖拽相同物品合成升级</p>
+        <p>💡 点击生成器产出物品，拖拽相同物品合成升级，双击提交订单</p>
       </div>
     </div>
   )

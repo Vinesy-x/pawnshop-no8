@@ -11,6 +11,7 @@ interface CellProps {
   onDragStart: () => void
   onDragEnd: () => void
   onDrop: () => void
+  onDoubleClick?: () => void  // 双击提交订单
 }
 
 export const Cell: React.FC<CellProps> = ({
@@ -20,7 +21,8 @@ export const Cell: React.FC<CellProps> = ({
   onClickGenerator,
   onDragStart,
   onDragEnd,
-  onDrop
+  onDrop,
+  onDoubleClick
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   
@@ -47,6 +49,7 @@ export const Cell: React.FC<CellProps> = ({
             onDragStart()
           }}
           onDragEnd={onDragEnd}
+          onDoubleClick={onDoubleClick}
         >
           <span className="cell-icon">{itemDef?.icon || '❓'}</span>
           {itemDef && itemDef.level > 1 && (

@@ -28,6 +28,11 @@
   border-radius: 8px;
   border: 1px solid #3a3a4a;
   position: relative;
+  transition: all 0.2s ease;
+}
+
+.order-item:not(.complete):hover {
+  border-color: #FFD700;
 }
 
 .order-item.complete {
@@ -76,4 +81,11 @@
   color: #4CAF50;
   font-size: 14px;
   font-weight: bold;
+}
+
+.order-tip {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
 }

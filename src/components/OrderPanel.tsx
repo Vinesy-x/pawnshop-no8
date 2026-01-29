@@ -3,10 +3,24 @@ import { useGameStore } from '../store/gameStore'
 import { getItemDef } from '../data/items'
 import './OrderPanel.css'
 
-export const OrderPanel: React.FC = () => {
+interface OrderPanelProps {
+  onDropItem?: (orderId: string) => void
+}
+
+export const OrderPanel: React.FC<OrderPanelProps> = ({ onDropItem }) => {
   const { orders } = useGameStore()
   
   if (orders.length === 0) return null
+  
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  }
+  
+  const handleDrop = (e: React.DragEvent, orderId: string) => {
+    e.preventDefault()
+    onDropItem?.(orderId)
+  }
   
   return (
     <div className="order-panel">
@@ -17,7 +31,12 @@ export const OrderPanel: React.FC = () => {
           const isComplete = order.completed >= order.count
           
           return (
-            <div key={order.id} className={`order-item ${isComplete ? 'complete' : ''}`}>
+            <div 
+              key={order.id} 
+              className={`order-item ${isComplete ? 'complete' : ''}`}
+              onDragOver={!isComplete ? handleDragOver : undefined}
+              onDrop={!isComplete ? (e) => handleDrop(e, order.id) : undefined}
+            >
               <div className="order-icon">{itemDef?.icon || '❓'}</div>
               <div className="order-info">
                 <div className="order-name">{itemDef?.name || '未知物品'}</div>
@@ -34,6 +53,7 @@ export const OrderPanel: React.FC = () => {
           )
         })}
       </div>
+      <p className="order-tip">💡 双击物品提交订单</p>
     </div>
   )
 }
