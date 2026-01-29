@@ -159,17 +159,18 @@ function App() {
           <div className="complete-content">
             <h2>🌙 故事完成</h2>
             <p className="story-title">「{story1.title}」</p>
+            <p className="story-era">—— {story1.era} ——</p>
             
             <div className="story-epilogue">
-              <p>王家大院的那场大火，至今仍是未解之谜。</p>
-              <p>但每逢清明，总有人看见一个穿红嫁衣的女子，</p>
-              <p>站在那口枯井边，对着月亮微笑……</p>
+              <p>「公道自在人心，因果不曾饶过谁」</p>
+              <p className="epilogue-dim">秀娘的执念散了，却在井边留下一片曼珠沙华。</p>
+              <p className="epilogue-dim">那是忘川河畔的花，引渡亡魂的灯。</p>
             </div>
             
             <div className="rewards">
               <h3>📦 获得奖励</h3>
-              <p>🪙 金币 x{coins}</p>
-              <p>⭐ 星星 x{stars}</p>
+              <p>🪙 金币 +{coins}</p>
+              <p>⭐ 星星 +{stars}</p>
               <p>🎭 收藏品：红嫁衣</p>
             </div>
             
