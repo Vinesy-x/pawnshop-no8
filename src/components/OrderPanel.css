@@ -1,0 +1,79 @@
+.order-panel {
+  background: linear-gradient(145deg, #1a1a2e, #12121e);
+  border-radius: 12px;
+  border: 1px solid #2a2a3e;
+  padding: 16px;
+  min-width: 200px;
+}
+
+.order-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #FFD700;
+  font-weight: bold;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: linear-gradient(145deg, #252535, #1a1a28);
+  border-radius: 8px;
+  border: 1px solid #3a3a4a;
+  position: relative;
+}
+
+.order-item.complete {
+  border-color: #4CAF50;
+  background: linear-gradient(145deg, #1a2a1a, #152015);
+}
+
+.order-icon {
+  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  border-radius: 8px;
+}
+
+.order-info {
+  flex: 1;
+}
+
+.order-name {
+  font-size: 13px;
+  color: #e0e0e0;
+  margin-bottom: 4px;
+}
+
+.order-progress {
+  font-size: 12px;
+  color: #888;
+}
+
+.order-reward {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: #FFD700;
+}
+
+.order-check {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: #4CAF50;
+  font-size: 14px;
+  font-weight: bold;
+}

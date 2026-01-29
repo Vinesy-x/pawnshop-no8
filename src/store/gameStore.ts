@@ -48,6 +48,7 @@ interface GameStore extends GameState {
   
   // 提交订单
   submitOrder: (orderId: string, itemId: string) => void
+  setOrders: (orders: any[]) => void
   
   // 资源
   addEnergy: (amount: number) => void
@@ -287,6 +288,11 @@ export const useGameStore = create<GameStore>((set, get) => ({
     }
     
     set({ orders: newOrders })
+  },
+
+  // 设置订单
+  setOrders: (orders: any[]) => {
+    set({ orders })
   },
 
   // 资源操作

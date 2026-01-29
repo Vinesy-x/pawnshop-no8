@@ -1,2 +1,5 @@
 export { Cell } from './Cell'
 export { Board } from './Board'
+export { OrderPanel } from './OrderPanel'
+export { DialogBox } from './DialogBox'
+export type { DialogLine } from './DialogBox'

@@ -1,0 +1,104 @@
+.dialog-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  z-index: 100;
+  cursor: pointer;
+}
+
+.dialog-box {
+  max-width: 600px;
+  margin: 0 auto;
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+  border: 2px solid #3a3a4a;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+}
+
+.dialog-speaker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.speaker-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2a2a4a, #1a1a2a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 2px solid #4a4a6a;
+}
+
+.speaker-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFD700;
+}
+
+.dialog-content {
+  position: relative;
+  min-height: 60px;
+}
+
+.dialog-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #e0e0e0;
+}
+
+.dialog-continue {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: #666;
+  animation: bounce 0.8s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.dialog-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dialog-choice {
+  padding: 12px 16px;
+  background: linear-gradient(145deg, #2a2a4a, #1a1a2a);
+  border: 1px solid #4a4a6a;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.dialog-choice:hover {
+  background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+/* 角色在右边时 */
+.dialog-box.right .dialog-speaker {
+  flex-direction: row-reverse;
+}
+
+.dialog-box.right .speaker-name {
+  text-align: right;
+}
