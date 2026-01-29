@@ -1,2 +1,2 @@
-export { Piece } from './Piece'
+export { Cell } from './Cell'
 export { Board } from './Board'

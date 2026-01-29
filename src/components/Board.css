@@ -2,79 +2,68 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
-}
-
-.board {
-  display: grid;
-  gap: 4px;
+  gap: 16px;
   padding: 16px;
-  background: linear-gradient(145deg, #1a1a2e, #16213e);
-  border-radius: 16px;
-  box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.5),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
-.board-controls {
+/* 资源栏 */
+.resource-bar {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  gap: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(145deg, #1a1a2e, #12121e);
+  border-radius: 12px;
+  border: 1px solid #2a2a3e;
 }
 
-.selection-info {
-  color: #e0e0e0;
-  font-size: 14px;
+.resource {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.recipe-hint {
-  color: #FFD700;
-  font-weight: bold;
+.resource-icon {
+  font-size: 20px;
 }
 
-.button-group {
-  display: flex;
-  gap: 12px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: none;
+.resource-value {
   font-size: 16px;
   font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  color: #e0e0e0;
 }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.resource.energy .resource-value {
+  color: #4FC3F7;
 }
 
-.btn-merge {
-  background: linear-gradient(145deg, #4CAF50, #2E7D32);
-  color: white;
+.resource.coins .resource-value {
+  color: #FFD700;
 }
 
-.btn-merge:hover:not(:disabled) {
-  background: linear-gradient(145deg, #66BB6A, #388E3C);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+.resource.stars .resource-value {
+  color: #FFA726;
 }
 
-.btn-clear {
-  background: linear-gradient(145deg, #607D8B, #455A64);
-  color: white;
+/* 棋盘 */
+.board {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+  border-radius: 16px;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid #2a2a3e;
 }
 
-.btn-clear:hover:not(:disabled) {
-  background: linear-gradient(145deg, #78909C, #546E7A);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(96, 125, 139, 0.4);
+/* 提示 */
+.board-tips {
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+}
+
+.board-tips p {
+  margin: 0;
 }
