@@ -1,57 +1,73 @@
-# 无名当铺 (Pawnshop No.8)
+# React + TypeScript + Vite
 
-> 「当掉执念，换取解脱」
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-中式恐怖 × 二合消除 × 时代变迁
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 📖 游戏简介
+## React Compiler
 
-你是**无名当铺**的掌柜，这家店穿越百年时光，从清末到民国再到现代。
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-来客不是为了钱，而是为了**平息生前的遗憾**。他们典当执念，换取解脱。每一笔交易背后，都是一个令人毛骨悚然却又催人泪下的故事。
+## Expanding the ESLint configuration
 
----
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 🎮 核心玩法
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- **二合炼化**：合成执念碎片，完成客人的订单
-- **剧情驱动**：每个订单都是一个微恐小故事
-- **时代推进**：清末 → 民国 → 现代，修缮当铺推动进程
-- **抉择分支**：你的选择决定故事走向
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
----
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-## 📚 设计文档
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-| 文档 | 说明 |
-|------|------|
-| [概览](./docs/00-overview.md) | 游戏核心循环与设计理念 |
-| [时代系统](./docs/01-eras.md) | 三大时代的风格与内容 |
-| [二合炼化](./docs/02-merge.md) | 合成链与棋盘设计 |
-| [当铺修缮](./docs/03-renovation.md) | Royal Match 式修缮进度 |
-| [订单剧情](./docs/04-story.md) | 故事大纲与剧情设计 |
-| [商业化](./docs/05-monetization.md) | 体力、道具、付费设计 |
-| [美术音效](./docs/06-art-audio.md) | 视觉风格与音效方案 |
-| [技术实现](./docs/07-tech.md) | 技术栈与开发路线 |
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-
-## 🛠️ 技术栈
-
-- React + TypeScript + Vite
-- Zustand (状态管理)
-- Framer Motion (动画)
-- Tailwind CSS (样式)
-- Howler.js (音效)
-
----
-
-## 📅 开发状态
-
-🚧 **设计阶段** - 文档完善中
-
----
-
-*「门外是阳间，门内是阴间。踏进这扇门，你就要做好准备。」*
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
